@@ -1,0 +1,34 @@
+{
+  "books": [
+    {
+      "id": "1",
+      "title": "JavaScript入門",
+      "author": "山田太郎",
+      "status": "読了"
+    },
+    {
+      "id": "2",
+      "title": "TypeScript実践",
+      "author": "佐藤花子",
+      "status": "未読"
+    },
+    {
+      "id": "3",
+      "title": "Reactの基礎",
+      "author": "鈴木一郎",
+      "status": "読書中"
+    },
+    {
+      "id": "4",
+      "title": "Node.jsガイド",
+      "author": "田中次郎",
+      "status": "未読"
+    },
+    {
+      "id": "5",
+      "title": "フロントエンド開発",
+      "author": "高橋三郎",
+      "status": "読了"
+    }
+  ]
+}

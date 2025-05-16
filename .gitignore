@@ -1,0 +1,43 @@
+# OSごとの不要ファイル
+.DS_Store
+Thumbs.db
+
+# node_modules（依存パッケージ）
+node_modules/
+
+# ビルド成果物
+dist/
+build/
+out/
+
+# ログファイル
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 環境変数ファイル
+.env
+.env.*
+
+# エディタ・IDEの設定
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# テストのカバレッジ
+coverage/
+
+# TypeScript
+*.tsbuildinfo
+
+# React RouterやViteの一時ファイル
+.react-router/
+.vite/
+
+# その他
+*.log
+
