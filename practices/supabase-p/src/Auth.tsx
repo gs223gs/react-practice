@@ -8,11 +8,19 @@ const supabase = createClient(
 
 const Auth = () => {
   const handleSignIn = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "github",
-    });
-    console.log(data);
-    console.log(error);
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "github",
+      });
+      if (error) throw error;
+      console.log("Sign-in successful:", data);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error during sign-in:", error.message);
+      } else {
+        console.error("Unexpected error during sign-in:", error);
+      }
+    }
   };
 
   return (
