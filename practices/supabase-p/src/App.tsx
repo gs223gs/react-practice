@@ -1,34 +1,13 @@
-import { useEffect, useState } from "react";
+
 import Auth from "./Auth";
 import useInstrument from "./useInstrument";
-import type { User } from "@supabase/supabase-js";
-import { createClient } from "@supabase/supabase-js";
+import useOAuth from "./useOAuth";
 
 function App() {
-  const [user, setUser] = useState<User | null>(null);
-  
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setUser(user)
-    })
-  }, [])
+  const { userdata, signOut } = useOAuth();
 
-  const supabase = createClient(
-    import.meta.env.VITE_SUPABASE_URL,
-    import.meta.env.VITE_SUPABASE_ANON_KEY
-  );
-  
   const { instruments, error, isLoading } = useInstrument();
-  console.log(instruments);
 
-  async function signOut() {
-    const { error } = await supabase.auth.signOut()
-    if (error) {
-      console.error("Error signing out:", error.message);
-    } else {
-      console.log("Signed out successfully");
-    }
-  }
   if (error) return <p>error</p>
   if (isLoading) return <p>loading</p>
 
@@ -39,12 +18,14 @@ function App() {
           <li key={instrument.id}>{instrument.id} : {instrument.name}</li>
         ))}
       </ul>
-      {user ? (
+      {userdata && (
         <div>
           <p>Logged In</p>
+          <p>{userdata.email}</p>
           <button onClick={signOut}>Sign Out</button>
         </div>
-      ): <Auth />}
+      )}
+      {!userdata && <Auth />}
     </>
   );
 }
