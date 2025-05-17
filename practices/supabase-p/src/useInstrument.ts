@@ -7,8 +7,6 @@ const supabase = createClient(
   import.meta.env.VITE_SUPABASE_ANON_KEY
 );
 
-console.log("supabase", supabase);
-console.log(supabase.from("instruments").select())
 // const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const useInstrument = () => {
   const fetcher = async () => {
