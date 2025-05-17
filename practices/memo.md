@@ -10,7 +10,7 @@ npm create vite@latest
 
 # tailwind
 ```sh
-npm install @tailwindcss/vite
+npm install tailwindcss @tailwindcss/vite
 公式ドキュメント読んで
 
 app.css
@@ -39,10 +39,18 @@ tsファイルの書き換え x 2
 viteファイルの書き換え x 1
 
 npx shadcn@latest init
+npm install -D @types/node
+
 ```
 https://ui.shadcn.com/docs/installation/vite
 
 これ見て
+
+# supabase
+```sh
+npm install @supabase/supabase-js
+
+```
 
 # 楽ちん
 ```sh
