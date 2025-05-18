@@ -1,8 +1,8 @@
-import Auth from "./Auth";
+import Auth from "./components/Auth";
 
 import "./App.css";
-import Dashbord from "./Dashbord";
-import useSession from "./useSession";
+import Dashbord from "./components/Dashbord";
+import useSession from "./hooks/useSession";
 
 function App() {
   const { userdata } = useSession();

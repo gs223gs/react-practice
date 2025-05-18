@@ -1,6 +1,6 @@
 
-import supabase from "./supabase";
-import type { Todos } from "./todos.type";
+import supabase from "../supabase";
+import type { Todos,Todo } from "../types/todos.type";
 
 const useCRUD = () => {
 
@@ -12,7 +12,7 @@ const useCRUD = () => {
     return data;
   };
 
-  const fetchTodos = async (userId: string) => {
+  const fetchTodos = async (userId: string):Promise<Todo[]> => {
     const { data, error } = await supabase
       .from("todos")
       .select("*")
@@ -21,7 +21,14 @@ const useCRUD = () => {
       console.error("Error fetching todos:", error);
       return [];
     }
-    return data as Todos;
+    const todos = data.map((todo) => {
+      return {
+        id: todo.id,
+        title: todo.title,
+        is_done: todo.is_done,
+      };
+    });
+    return todos as Todos;
   };
 
   const updateTodo = async (id: string, isDone: boolean) => {

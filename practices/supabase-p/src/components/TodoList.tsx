@@ -1,7 +1,5 @@
-
-import useSession from "./useSession";
-import { useTodos } from "./useTodos";
-
+import useSession from "../hooks/useSession";
+import { useTodos } from "../hooks/useTodos";
 const TodosList = () => {
   const { userdata } = useSession();
   const { todos, isLoading, isError, mutate} = useTodos(userdata?.id ?? "");

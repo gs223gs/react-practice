@@ -1,10 +1,10 @@
-import "./App.css";
+import "../App.css";
 import { useState } from "react";
 
 import Header from "./Header";
-import useCRUD from "./useCRUD";
-import useSession from "./useSession";
-import TodoList from "./TodoList";
+import useCRUD from "../hooks/useCRUD";
+import useSession from "../hooks/useSession";
+import TodoList from "../components/TodoList";
 const Dashbord = () => {
 
   const { userdata } = useSession();

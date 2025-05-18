@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 
-import "./App.css";
-import supabase from "./supabase";
+import "../App.css";
+import supabase from "../supabase";
 
 const Auth = () => {
   const handleSignIn = async () => {

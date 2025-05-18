@@ -1,7 +1,7 @@
 // useTodos.ts
 import useSWR, { type KeyedMutator } from 'swr'
 import useCRUD from './useCRUD'
-import type { Todo } from './todos.type'
+import type { Todo } from '../types/todos.type'
 
 
 

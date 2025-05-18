@@ -52,6 +52,13 @@ npm install @supabase/supabase-js
 
 ```
 
+# useSWR
+```sh
+npm install swr
+
+```
+
+
 # 楽ちん
 ```sh
 npm install react-hook-form

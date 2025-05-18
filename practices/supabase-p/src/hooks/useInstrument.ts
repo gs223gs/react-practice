@@ -1,6 +1,6 @@
 import useSWR from "swr";
-import type { Instrument } from "./interface";
-import supabase from "./supabase";
+import type { Instrument } from "../interface";
+import supabase from "../supabase";
 
 const useInstrument = () => {
   const fetcher = async () => {

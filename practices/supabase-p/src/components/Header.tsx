@@ -1,10 +1,10 @@
-import "./App.css";
+import "../App.css";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import useSession from "./useSession";
+import useSession from "../hooks/useSession";
 
-import useOAuth from "./useOAuth";
+import useOAuth from "../hooks/useOAuth";
 const Header = () => {
   const { userdata } = useSession();
   const { signOut } = useOAuth();

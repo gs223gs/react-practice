@@ -25,6 +25,7 @@ Vite
 | shadcn/ui          | 2025/05/11       |
 | vercel             | 2025/05/16       |
 | GitHub Actions     | 2025/05/16       |
+| supabase           | 2025/05/17       |
 
 ## 今後の予定
 
@@ -32,5 +33,4 @@ Vite
 - jest
 - storybook
 - Next.js
-- supabase
 - React Native
