@@ -6,7 +6,6 @@ import useSession from "./useSession";
 
 function App() {
   const { userdata } = useSession();
-  console.log(userdata);
   return (
     <>
       {userdata && <Dashbord />}
