@@ -8,7 +8,7 @@ import type { KeyedMutator } from 'swr';
 const TodoItem = ({ todo, mutate }: { todo: Todo, mutate: KeyedMutator<Todo[]> }) => {
   const {updateTodo, deleteTodo} = useCRUD()
   const handleUpdate = async () => {
-    await updateTodo(todo.id, !todo.is_done);
+    await updateTodo(todo.id, { ...todo, is_done: true });
     mutate();
   }
   const handleDelete = async () => {
@@ -16,11 +16,12 @@ const TodoItem = ({ todo, mutate }: { todo: Todo, mutate: KeyedMutator<Todo[]> }
     mutate();
   }
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md">
+    <div className="p-4 bg-white rounded-lg shadow-md flex justify-between items-center">
       <h3 className="font-bold">{todo.title}</h3>
-      <p>{todo.is_done ? "完了" : "未完了"}</p>
-      <Button onClick={handleUpdate}>完了</Button>
-      <Button onClick={handleDelete}>削除</Button>
+      <div className="flex gap-2">
+        <Button onClick={handleUpdate}>完了</Button>
+        <Button onClick={handleDelete}>削除</Button>
+      </div>
     </div>
   );
 };
