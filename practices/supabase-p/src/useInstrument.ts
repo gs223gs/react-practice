@@ -1,16 +1,10 @@
 import useSWR from "swr";
-import { createClient } from "@supabase/supabase-js";
 import type { Instrument } from "./interface";
+import supabase from "./supabase";
 
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
-
-// const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const useInstrument = () => {
   const fetcher = async () => {
-    const { data, error } = await supabase.from("instruments").select('*');
+  const { data, error } = await supabase.from("instruments").select("*");
     if (error) throw error;
     console.log("fetching");
     console.log("data", data);
