@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import type { User } from "@supabase/supabase-js";
-
 // const refreshAccessToken = async (
 //   setUserdata: (userdata: User | undefined) => void
 // ) => {
