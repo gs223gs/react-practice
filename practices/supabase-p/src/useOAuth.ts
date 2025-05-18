@@ -6,12 +6,20 @@ const useOAuth = () => {
   const [userdata, setUserdata] = useState<User | null>(null);
 
   const fetchUserDate = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
     setUserdata(user);
   };
 
+
+
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
+    if (!error) {
+      window.location.href = "/";
+    }
     return error;
   };
 
@@ -19,7 +27,7 @@ const useOAuth = () => {
     fetchUserDate();
   }, []);
 
-  return { userdata, signOut };
+  return { userdata, signOut};
 };
 
 export default useOAuth;
