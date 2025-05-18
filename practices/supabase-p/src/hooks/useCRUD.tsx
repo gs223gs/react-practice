@@ -16,7 +16,8 @@ const useCRUD = () => {
     const { data, error } = await supabase
       .from("todos")
       .select("*")
-      .eq("user_id", userId);
+      .eq("user_id", userId)
+      .eq("is_done", false)
     if (error) {
       console.error("Error fetching todos:", error);
       return [];
