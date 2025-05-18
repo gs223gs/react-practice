@@ -6,12 +6,11 @@ import useCRUD from "../hooks/useCRUD";
 import useSession from "../hooks/useSession";
 import TodoList from "../components/TodoList";
 const Dashbord = () => {
-
   const { userdata } = useSession();
-  const { createTodo} = useCRUD();
+  const { createTodo } = useCRUD();
   const [task, setTask] = useState<string>("");
 
-  console.log("render")
+  console.log("render");
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setTask("");
@@ -24,20 +23,25 @@ const Dashbord = () => {
   return (
     <>
       <Header />
-      <form onSubmit={handleSubmit}>
-        <span>タスク入力</span>
-        <input
-          type="text"
-          onChange={(e) => setTask(e.target.value)}
-          value={task}
-          className="border-2 border-gray-300 rounded-md p-2"
-        />
-        <button type="submit" className="bg-blue-500 text-white rounded-md p-2">
-          追加
-        </button>
-      </form>
+      <div className="flex flex-col items-center justify-center">
+        <form onSubmit={handleSubmit}>
+          <span>タスク入力</span>
+          <input
+            type="text"
+            onChange={(e) => setTask(e.target.value)}
+            value={task}
+            className="border-2 border-gray-300 rounded-md p-2"
+          />
+          <button
+            type="submit"
+            className="bg-blue-500 text-white rounded-md p-2"
+          >
+            追加
+          </button>
+        </form>
 
-      <TodoList />
+        <TodoList />
+      </div>
     </>
   );
 };
