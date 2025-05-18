@@ -68,8 +68,22 @@ OAuth 認証実装
     - ER 図
 
     - crud 実装
-    - effectでは初期データの取得ができてもその後ができない
-    - useSWRを使用　コンポーネントでmutate() を呼び出し
+      - effectでは初期データの取得ができてもその後ができない
+      - useSWRを使用　コンポーネントでmutate() を呼び出し
+      - .eqは重ねがけできる　.eq("user_id", userId).eq("is_done", false)
+      - update, delete はほぼ同じ
+      - handler内でmutate() を呼び出す
+        - データの更新が反映される
+      - update,deleteをしたらtoastでお知らせ
+      - editingはstateで管理 本番ではモーダルにする
+      - 本番では todoitemをcardにする
+      - orderで降順にする
+      - スプレッド構文を使おう！
+      - 編集ボタンを押したら編集モードになる
+      - 編集モードではinputに変更する
+      - 確定ボタンを押したら編集モードを解除する
+      - 編集モードではinputに変更する
+      - shadcnの実装
 
     - type todo 作成
     - 行レベルセキュリティの設計
