@@ -5,7 +5,7 @@ import type { Todo } from "../types/todos.type";
 import useCRUD from "@/hooks/useCRUD";
 import type { KeyedMutator } from "swr";
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
+import TodoEditing from "./TodoEditing";
 
 const TodoItem = ({
   todo,
@@ -34,14 +34,11 @@ const TodoItem = ({
   return (
     <div>
       {isEditing ? (
-        <div className="p-4 bg-white rounded-lg shadow-md flex justify-between items-center">
-          <Input
-            type="text"
-            value={editedTitle}
-            onChange={(e) => setEditedTitle(e.target.value)}
-          />
-          <Button onClick={handleUpdate}>確定</Button>
-        </div>
+        <TodoEditing
+          handleUpdate={handleUpdate}
+          editedTitle={editedTitle}
+          setEditedTitle={setEditedTitle}
+        />
       ) : (
         <div className="p-4 bg-white rounded-lg shadow-md flex justify-between items-center">
           <h3 className="font-bold text-center mr-4">{todo.title}</h3>
