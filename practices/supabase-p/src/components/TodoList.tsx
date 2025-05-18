@@ -15,7 +15,7 @@ const TodosList = () => {
   mutate()
   console.log("TodoList render")
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+    <div className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
       {todos?.length == 0 && <div className="p-4 bg-red-100 rounded-lg shadow-md ">Todoがありません</div>}
       {todos &&
         todos.map((todo) => (
