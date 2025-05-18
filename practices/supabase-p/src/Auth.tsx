@@ -1,10 +1,7 @@
-import { createClient } from "@supabase/supabase-js";
-import { Button } from "./components/ui/button";
+import { Button } from "@/components/ui/button";
 
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+import "./App.css";
+import supabase from "./supabase";
 
 const Auth = () => {
   const handleSignIn = async () => {
