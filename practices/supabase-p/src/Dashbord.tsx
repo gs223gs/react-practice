@@ -11,8 +11,6 @@ const Dashbord = () => {
   const { createTodo} = useCRUD();
   const [task, setTask] = useState<string>("");
 
-
-
   console.log("render")
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

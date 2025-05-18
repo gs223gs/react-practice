@@ -1,22 +1,23 @@
-import { useState, useEffect } from "react";
-import useCRUD from "./useCRUD";
-import type { Todos } from "./todos.type";
+
 import useSession from "./useSession";
+import { useTodos } from "./useTodos";
 
 const TodosList = () => {
   const { userdata } = useSession();
-  const [todos, setTodos] = useState<Todos | null>(null);
-  const { fetchTodos } = useCRUD();
-  useEffect(() => {
-    if (userdata?.id) {
-      fetchTodos(userdata.id).then((todos) => setTodos(todos));
-      console.log("fetch");
-    }
-  }, [userdata?.id]);
+  const { todos, isLoading, isError, mutate} = useTodos(userdata?.id ?? "");
+  if(!userdata?.id){
+    return <div>ログインしてください</div>
+  }
+  
+  
+  if(isLoading) return <div>Loading...</div>
+  if(isError) return <div>Error: {isError.message}</div>
+
+  mutate()
+  console.log("TodoList render")
   return (
     <div>
-      <div>todos</div>
-      {/* {todos == null && <div>Todoがありません</div>} */}
+      {todos?.length == 0 && <div>Todoがありません</div>}
       {todos &&
         todos.map((todo) => (
           <div key={todo.id}>
