@@ -18,6 +18,7 @@ const useCRUD = () => {
       .select("*")
       .eq("user_id", userId)
       .eq("is_done", false)
+      .order("created_at", { ascending: false })
     if (error) {
       console.error("Error fetching todos:", error);
       return [];
@@ -32,10 +33,10 @@ const useCRUD = () => {
     return todos as Todos;
   };
 
-  const updateTodo = async (id: string, isDone: boolean) => {
+  const updateTodo = async (id: string, todo: Todo) => {
     const { data, error } = await supabase
       .from("todos")
-      .update({ is_done: isDone })
+      .update({ ...todo })
       .eq("id", id);
     if (error) console.error("Error updating todo:", error);
     return data;
