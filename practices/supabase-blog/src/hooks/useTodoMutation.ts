@@ -1,8 +1,7 @@
-import { createClient } from "@/lib/supabase/client";
 import { useSWRConfig } from "swr";
+import supabase from "@/lib/supabase/client";
 
 export function useTodoMutation() {
-  const supabase = createClient();
   const { mutate } = useSWRConfig();
 
   const createTodo = async (title: string) => {

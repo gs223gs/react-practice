@@ -1,8 +1,7 @@
 import useSWR from "swr";
-import { createClient } from "@/lib/supabase/client";
+import supabase from "@/lib/supabase/client";
 
 export function useTodos() {
-  const supabase = createClient();
 
   const fetcher = async () => {
     const { data, error } = await supabase
