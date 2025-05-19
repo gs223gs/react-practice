@@ -4,6 +4,7 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import type { Session } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
+import Dashboard from "./components/dashboard";
 const supabase = createClient();
 
 export default function App() {
@@ -30,6 +31,6 @@ export default function App() {
       </div>
     );
   } else {
-    return <div>Logged in!</div>;
+    return <Dashboard />;
   }
 }
