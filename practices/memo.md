@@ -13,7 +13,7 @@ npm create vite@latest
 npm install tailwindcss @tailwindcss/vite
 公式ドキュメント読んで
 
-app.css
+index.css
 @import "tailwindcss";
 ```
 
