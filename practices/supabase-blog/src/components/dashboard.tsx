@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Form,
   FormField,
@@ -15,13 +16,25 @@ import { z } from "zod";
 import { formSchema } from "@/lib/validation/todoform";
 import useFormWithValidation from "@/hooks/useFormWithValidation";
 import { useTodos } from "@/hooks/useTodo";
+import { useTodoMutation } from "@/hooks/useTodoMutation";
+import type { Todo } from "@/types/todos.type";
+
 const Dashboard = () => {
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [editedTitle, setEditedTitle] = useState<string>("");
   const form = useFormWithValidation();
   const { data: todos, isLoading } = useTodos();
-  console.log(todos)
+  const { createTodo, deleteTodo, updateTodo } = useTodoMutation();
+  console.log(todos);
   const handleSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data.title);
+    createTodo(data.title);
   };
+  const handleUpdate = (id: string, todo: Todo) => {
+    updateTodo(id, {...todo, title: editedTitle});
+    setIsEdit(false);
+    console.log("update", editedTitle);
+  };
+  console.log("dashboard render");
   return (
     <>
       <div className="flex flex-col justify-center items-center m-10">
@@ -57,7 +70,27 @@ const Dashboard = () => {
         <div>Loading...</div>
       ) : (
         <div>
-          {todos?.map((todo) => <div key={todo.id}>{todo.title}</div>)}
+          {todos?.map((todo) => (
+            <>
+            {isEdit ? (
+              <div key={todo.id}>
+                <Input
+                  placeholder="タスクを入力してください"
+                  value={editedTitle}
+                  onChange={(e) => setEditedTitle(e.target.value)}
+                />
+                <Button onClick={() => handleUpdate(todo.id, todo)}>完了</Button>
+                <Button onClick={() => setIsEdit(false)}>もどる</Button>
+              </div>
+            ) : (
+              <div key={todo.id}>
+                {todo.title}
+                <Button onClick={() => setIsEdit(true)}>編集</Button>
+                <Button onClick={() => deleteTodo(todo.id)}>削除</Button>
+              </div>
+            )}
+            </>
+          ))}
         </div>
       )}
     </>
