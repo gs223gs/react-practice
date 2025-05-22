@@ -1,19 +1,21 @@
-import "./App.css";
-import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ReactDOM from 'react-dom/client'
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient()
 
-function App() {
+export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />
       <Example />
     </QueryClientProvider>
-  );
+  )
 }
-
-export default App;
 
 function Example() {
   const { isPending, error, data, isFetching } = useQuery({
@@ -24,8 +26,6 @@ function Example() {
       )
       return await response.json()
     },
-    staleTime: 1000,
-    refetchInterval: 1000,
   })
 
   if (isPending) return 'Loading...'
@@ -43,3 +43,6 @@ function Example() {
     </div>
   )
 }
+
+const rootElement = document.getElementById('root') as HTMLElement
+ReactDOM.createRoot(rootElement).render(<App />)
