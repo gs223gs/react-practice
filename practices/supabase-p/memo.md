@@ -13,7 +13,6 @@ shadcn
 ## 事前設定
 
 - Supabaseの設定
-  - REST Supabase拡張機能HTTPをオンにする（今回はなし、supabase.jsでやる）
   - テーブルの作成
   ```sql
   CREATE TABLE todos (
