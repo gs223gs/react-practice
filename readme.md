@@ -12,7 +12,7 @@ Vite
 
 ## 学習開始日
 
-| 技術名             | 学習開始日       |
+| 技術名              | 学習開始日         |
 |--------------------|------------------|
 | React              | 2025/04/24       |
 | TypeScript         | 2025/04/24       |
@@ -26,11 +26,15 @@ Vite
 | vercel             | 2025/05/16       |
 | GitHub Actions     | 2025/05/16       |
 | supabase           | 2025/05/17       |
+| React-Query        | 2025/05/22       |
+| jest               | 2025/05/23       |
+| storybook          | 2025/05/23       |
+| vitest             | 2025/05/23       |
+
 
 ## 今後の予定
 
-- React-Query
 - jest
 - storybook
-- Next.js
+- Next.js(SSR)
 - React Native
