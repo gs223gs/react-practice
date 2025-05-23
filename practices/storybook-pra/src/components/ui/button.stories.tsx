@@ -1,11 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from './button';
+import { expect } from '@storybook/jest';
+import { within, userEvent } from '@storybook/testing-library';
 
 const meta: Meta<typeof Button> = {
   title: 'UI/Button',
   component: Button,
   parameters: {
     layout: 'centered',
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: 'color-contrast',
+            enabled: true,
+          },
+        ],
+      },
+    },
   },
   tags: ['autodocs'],
   argTypes: {
@@ -28,6 +40,16 @@ export const Default: Story = {
     children: 'Button',
     variant: 'default',
     size: 'default',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button');
+    
+    // ボタンが存在することを確認
+    expect(button).toBeInTheDocument();
+    
+    // クリックイベントのテスト
+    await userEvent.click(button);
   },
 };
 

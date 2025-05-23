@@ -6,7 +6,6 @@ const Form = () => {
   return (
     <form className="">
       <Input type="text" /><br/>
-      <Input type="text" />
       <Button type="submit">Submit</Button>
     </form>
   )
