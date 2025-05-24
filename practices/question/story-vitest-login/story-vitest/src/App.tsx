@@ -7,7 +7,7 @@ import './App.css'
 function App() {
   const { form, onSubmit } = ProfileForm()
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center m-10">
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField

@@ -14,9 +14,7 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div className="w-full max-w-md p-4">
         <Story />
-      </div>
     ),
   ],
 } satisfies Meta<typeof App>;
