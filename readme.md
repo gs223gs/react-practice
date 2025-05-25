@@ -34,7 +34,6 @@ Vite
 
 ## 今後の予定
 
-- jest
-- storybook
 - Next.js(SSR)
 - React Native
+
