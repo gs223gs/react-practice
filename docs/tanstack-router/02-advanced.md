@@ -78,4 +78,85 @@
 - カスタムエラーページ
 - エラー状態の視覚的フィードバック
 - エラーからの回復オプション
-- エラー報告機能 
+- エラー報告機能
+
+```typescript
+// routes/blog.tsx
+// ブログ関連の高度なルーティング定義
+import { createFileRoute } from '@tanstack/react-router'
+
+// 複数の動的パラメータを持つルート
+export const blogPostRoute = createFileRoute('/blog/$year/$month/$slug')({
+  // validateSearch: クエリパラメータの型安全な検証メソッド
+  // 引数: (search: クエリパラメータオブジェクト)
+  // 戻り値: 検証済みのクエリパラメータオブジェクト
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      preview: search.preview === 'true',  // プレビューモードのフラグ
+      lang: search.lang as string || 'ja', // 言語設定（デフォルト: 日本語）
+    }
+  },
+  // データローダー: 複数のパラメータを使用
+  loader: async ({ params, search }) => {
+    const { year, month, slug } = params  // URLパラメータ
+    const { preview, lang } = search      // クエリパラメータ
+    
+    // fetchBlogPost: ブログ記事を取得するAPI呼び出し
+    // 引数: { year, month, slug, preview, lang }
+    // 戻り値: Promise<BlogPost>
+    const post = await fetchBlogPost({ year, month, slug, preview, lang })
+    return { post }
+  },
+  // ブログ記事表示コンポーネント
+  component: () => {
+    // useLoaderData: ローダーから取得したデータを取得するフック
+    // 引数: なし
+    // 戻り値: ローダーが返したデータ
+    const { post } = useLoaderData()
+    return <BlogPost post={post} />
+  },
+})
+
+// オプショナルパラメータを持つルート
+export const categoryRoute = createFileRoute('/category/$categoryId?')({
+  // カテゴリー一覧/詳細のデータローダー
+  loader: async ({ params }) => {
+    const { categoryId } = params  // オプショナルなカテゴリーID
+    
+    // fetchCategories: カテゴリー一覧を取得するAPI呼び出し
+    // 引数: なし
+    // 戻り値: Promise<Category[]>
+    const categories = await fetchCategories()  // 全カテゴリーの取得
+    
+    // find: 配列から条件に一致する要素を検索するメソッド
+    // 引数: (callback: 検索条件関数)
+    // 戻り値: 条件に一致する要素またはundefined
+    const selectedCategory = categoryId 
+      ? categories.find(c => c.id === categoryId)
+      : null
+    return { categories, selectedCategory }
+  },
+})
+
+// ワイルドカードルート: 未定義のパスに対するフォールバック
+export const catchAllRoute = createFileRoute('/$*')({
+  component: () => <NotFound />  // 404ページの表示
+})
+
+// 正規表現によるパラメータ制約
+export const userRoute = createFileRoute('/user/$userId')({
+  // validateParams: パラメータのバリデーションメソッド
+  // 引数: (params: パラメータオブジェクト)
+  // 戻り値: 検証済みのパラメータオブジェクト
+  validateParams: (params) => {
+    const { userId } = params
+    // test: 正規表現による文字列マッチングメソッド
+    // 引数: (str: 検証対象の文字列)
+    // 戻り値: boolean
+    if (!/^[a-zA-Z0-9]{3,20}$/.test(userId)) {
+      throw new Error('Invalid user ID format')
+    }
+    return params
+  },
+}) 
+```
