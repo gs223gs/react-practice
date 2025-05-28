@@ -1,17 +1,19 @@
 import { Link } from '@tanstack/react-router'
+import { Button } from '@/components/ui/button'
 
-export default function Header() {
+export function Header() {
   return (
-    <header className="p-2 flex gap-2 bg-white text-black justify-between">
-      <nav className="flex flex-row">
-        <div className="px-2 font-bold">
-          <Link to="/">Home</Link>
-        </div>
-
-        <div className="px-2 font-bold">
-          <Link to="/demo/tanstack-query">TanStack Query</Link>
-        </div>
-      </nav>
+    <header className="border-b">
+      <div className="container flex h-16 items-center px-4">
+        <nav className="flex items-center space-x-4 lg:space-x-6">
+          <Link to="/posts">
+            <Button variant="ghost">Posts</Button>
+          </Link>
+          <Link to="/posts/create">
+            <Button variant="ghost">Create Post</Button>
+          </Link>
+        </nav>
+      </div>
     </header>
   )
 }
