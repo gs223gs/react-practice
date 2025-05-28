@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { PostForm } from '@/components/PostForm'
 import { usePost } from '@/hooks/use-posts'
-import { PostFormData } from '@/lib/schemas'
+import type { PostFormData } from '@/lib/schemas'
 
 export const editPostRoute = createFileRoute('/edit-post')({
   component: EditPostPage,
