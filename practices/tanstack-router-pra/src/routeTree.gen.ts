@@ -11,10 +11,45 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as RootImport } from './routes/root'
+import { Route as PostsImport } from './routes/posts'
+import { Route as PostImport } from './routes/post'
+import { Route as EditPostImport } from './routes/edit-post'
+import { Route as CreatePostImport } from './routes/create-post'
 import { Route as IndexImport } from './routes/index'
 import { Route as DemoTanstackQueryImport } from './routes/demo.tanstack-query'
 
 // Create/Update Routes
+
+const RootRoute = RootImport.update({
+  id: '/root',
+  path: '/root',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PostsRoute = PostsImport.update({
+  id: '/posts',
+  path: '/posts',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PostRoute = PostImport.update({
+  id: '/post',
+  path: '/post',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const EditPostRoute = EditPostImport.update({
+  id: '/edit-post',
+  path: '/edit-post',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CreatePostRoute = CreatePostImport.update({
+  id: '/create-post',
+  path: '/create-post',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -39,6 +74,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/create-post': {
+      id: '/create-post'
+      path: '/create-post'
+      fullPath: '/create-post'
+      preLoaderRoute: typeof CreatePostImport
+      parentRoute: typeof rootRoute
+    }
+    '/edit-post': {
+      id: '/edit-post'
+      path: '/edit-post'
+      fullPath: '/edit-post'
+      preLoaderRoute: typeof EditPostImport
+      parentRoute: typeof rootRoute
+    }
+    '/post': {
+      id: '/post'
+      path: '/post'
+      fullPath: '/post'
+      preLoaderRoute: typeof PostImport
+      parentRoute: typeof rootRoute
+    }
+    '/posts': {
+      id: '/posts'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsImport
+      parentRoute: typeof rootRoute
+    }
+    '/root': {
+      id: '/root'
+      path: '/root'
+      fullPath: '/root'
+      preLoaderRoute: typeof RootImport
+      parentRoute: typeof rootRoute
+    }
     '/demo/tanstack-query': {
       id: '/demo/tanstack-query'
       path: '/demo/tanstack-query'
@@ -53,36 +123,83 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/create-post': typeof CreatePostRoute
+  '/edit-post': typeof EditPostRoute
+  '/post': typeof PostRoute
+  '/posts': typeof PostsRoute
+  '/root': typeof RootRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/create-post': typeof CreatePostRoute
+  '/edit-post': typeof EditPostRoute
+  '/post': typeof PostRoute
+  '/posts': typeof PostsRoute
+  '/root': typeof RootRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/create-post': typeof CreatePostRoute
+  '/edit-post': typeof EditPostRoute
+  '/post': typeof PostRoute
+  '/posts': typeof PostsRoute
+  '/root': typeof RootRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo/tanstack-query'
+  fullPaths:
+    | '/'
+    | '/create-post'
+    | '/edit-post'
+    | '/post'
+    | '/posts'
+    | '/root'
+    | '/demo/tanstack-query'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo/tanstack-query'
-  id: '__root__' | '/' | '/demo/tanstack-query'
+  to:
+    | '/'
+    | '/create-post'
+    | '/edit-post'
+    | '/post'
+    | '/posts'
+    | '/root'
+    | '/demo/tanstack-query'
+  id:
+    | '__root__'
+    | '/'
+    | '/create-post'
+    | '/edit-post'
+    | '/post'
+    | '/posts'
+    | '/root'
+    | '/demo/tanstack-query'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CreatePostRoute: typeof CreatePostRoute
+  EditPostRoute: typeof EditPostRoute
+  PostRoute: typeof PostRoute
+  PostsRoute: typeof PostsRoute
+  RootRoute: typeof RootRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CreatePostRoute: CreatePostRoute,
+  EditPostRoute: EditPostRoute,
+  PostRoute: PostRoute,
+  PostsRoute: PostsRoute,
+  RootRoute: RootRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
 }
 
@@ -97,11 +214,31 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/create-post",
+        "/edit-post",
+        "/post",
+        "/posts",
+        "/root",
         "/demo/tanstack-query"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/create-post": {
+      "filePath": "create-post.tsx"
+    },
+    "/edit-post": {
+      "filePath": "edit-post.tsx"
+    },
+    "/post": {
+      "filePath": "post.tsx"
+    },
+    "/posts": {
+      "filePath": "posts.tsx"
+    },
+    "/root": {
+      "filePath": "root.tsx"
     },
     "/demo/tanstack-query": {
       "filePath": "demo.tanstack-query.tsx"
