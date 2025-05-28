@@ -1,13 +1,10 @@
-import { createRootRoute, createRouter } from '@tanstack/react-router'
-import { Root } from './root.tsx'
-import { postsRoute } from './posts.tsx'
-import { postRoute } from './post.tsx'
-import { createPostRoute } from './create-post.tsx'
-import { editPostRoute } from './edit-post.tsx'
-
-const rootRoute = createRootRoute({
-  component: Root,
-})
+import { createRouter } from '@tanstack/react-router'
+import { Route as rootRoute } from './__root'
+import { NotFound } from '../components/NotFound'
+import { postsRoute } from './posts'
+import { postRoute } from './post'
+import { createPostRoute } from './create-post'
+import { editPostRoute } from './edit-post'
 
 const routeTree = rootRoute.addChildren([
   postsRoute,
@@ -16,7 +13,10 @@ const routeTree = rootRoute.addChildren([
   editPostRoute,
 ])
 
-export const router = createRouter({ routeTree })
+export const router = createRouter({
+  routeTree,
+  defaultNotFoundComponent: NotFound,
+})
 
 declare module '@tanstack/react-router' {
   interface Register {

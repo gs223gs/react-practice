@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { Button } from '@/components/ui/button'
+import { Button } from './ui/button'
 
 export function Header() {
   return (
@@ -9,7 +9,7 @@ export function Header() {
           <Link to="/posts">
             <Button variant="ghost">Posts</Button>
           </Link>
-          <Link to="/posts/create">
+          <Link to="/create-post">
             <Button variant="ghost">Create Post</Button>
           </Link>
         </nav>

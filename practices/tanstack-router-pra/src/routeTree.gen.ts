@@ -17,7 +17,6 @@ import { Route as PostImport } from './routes/post'
 import { Route as EditPostImport } from './routes/edit-post'
 import { Route as CreatePostImport } from './routes/create-post'
 import { Route as IndexImport } from './routes/index'
-import { Route as DemoTanstackQueryImport } from './routes/demo.tanstack-query'
 
 // Create/Update Routes
 
@@ -54,12 +53,6 @@ const CreatePostRoute = CreatePostImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const DemoTanstackQueryRoute = DemoTanstackQueryImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -109,13 +102,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RootImport
       parentRoute: typeof rootRoute
     }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryImport
-      parentRoute: typeof rootRoute
-    }
   }
 }
 
@@ -128,7 +114,6 @@ export interface FileRoutesByFullPath {
   '/post': typeof PostRoute
   '/posts': typeof PostsRoute
   '/root': typeof RootRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRoutesByTo {
@@ -138,7 +123,6 @@ export interface FileRoutesByTo {
   '/post': typeof PostRoute
   '/posts': typeof PostsRoute
   '/root': typeof RootRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRoutesById {
@@ -149,28 +133,13 @@ export interface FileRoutesById {
   '/post': typeof PostRoute
   '/posts': typeof PostsRoute
   '/root': typeof RootRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/create-post'
-    | '/edit-post'
-    | '/post'
-    | '/posts'
-    | '/root'
-    | '/demo/tanstack-query'
+  fullPaths: '/' | '/create-post' | '/edit-post' | '/post' | '/posts' | '/root'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/create-post'
-    | '/edit-post'
-    | '/post'
-    | '/posts'
-    | '/root'
-    | '/demo/tanstack-query'
+  to: '/' | '/create-post' | '/edit-post' | '/post' | '/posts' | '/root'
   id:
     | '__root__'
     | '/'
@@ -179,7 +148,6 @@ export interface FileRouteTypes {
     | '/post'
     | '/posts'
     | '/root'
-    | '/demo/tanstack-query'
   fileRoutesById: FileRoutesById
 }
 
@@ -190,7 +158,6 @@ export interface RootRouteChildren {
   PostRoute: typeof PostRoute
   PostsRoute: typeof PostsRoute
   RootRoute: typeof RootRoute
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -200,7 +167,6 @@ const rootRouteChildren: RootRouteChildren = {
   PostRoute: PostRoute,
   PostsRoute: PostsRoute,
   RootRoute: RootRoute,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
 }
 
 export const routeTree = rootRoute
@@ -218,8 +184,7 @@ export const routeTree = rootRoute
         "/edit-post",
         "/post",
         "/posts",
-        "/root",
-        "/demo/tanstack-query"
+        "/root"
       ]
     },
     "/": {
@@ -239,9 +204,6 @@ export const routeTree = rootRoute
     },
     "/root": {
       "filePath": "root.tsx"
-    },
-    "/demo/tanstack-query": {
-      "filePath": "demo.tanstack-query.tsx"
     }
   }
 }

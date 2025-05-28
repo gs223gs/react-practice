@@ -11,7 +11,8 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Post, PostFormData, postSchema } from '@/lib/schemas'
+import type { Post, PostFormData } from '@/lib/schemas'
+import { postSchema } from '@/lib/schemas'
 
 type PostFormProps = {
   defaultValues?: Post
