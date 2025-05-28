@@ -1,5 +1,156 @@
 # TanStack Router実装詳細
 
+## 実装手順の背景
+
+### 1. 技術選定の理由
+
+#### TanStack Router
+- **目的**: 型安全なルーティングを実現し、開発時のエラーを最小限に抑える
+- **利点**: 
+  - TypeScriptとの完全な統合
+  - パラメータの型安全性
+  - ルート定義の一元管理
+  - パフォーマンスの最適化
+
+#### TanStack Query
+- **目的**: サーバー状態の管理を効率化し、データフェッチングの複雑さを軽減
+- **利点**:
+  - キャッシュ管理の自動化
+  - データの再検証の簡素化
+  - エラーハンドリングの統一
+  - ローディング状態の管理
+
+#### shadcn/ui
+- **目的**: 一貫性のあるUIコンポーネントを提供し、開発効率を向上
+- **利点**:
+  - カスタマイズ可能なコンポーネント
+  - アクセシビリティの考慮
+  - テーマの柔軟な変更
+  - モダンなデザイン
+
+### 2. 実装手順の根拠
+
+1. **プロジェクトの初期設定**
+   - 各ライブラリの設定を最初に行うことで、後続の実装で一貫性を保証
+   - 開発環境の統一により、チーム開発の効率化を実現
+
+2. **コンポーネントの実装**
+   - 共通コンポーネントから実装することで、再利用性を確保
+   - 機能ごとのコンポーネント分割により、保守性を向上
+
+3. **カスタムフックの実装**
+   - ビジネスロジックの分離により、コンポーネントの責務を明確化
+   - データフェッチングのロジックを集約し、再利用性を向上
+
+4. **ルーティングの実装**
+   - アプリケーションの構造を明確に定義
+   - ナビゲーションの一貫性を確保
+
+## 外部ライブラリの詳細
+
+### TanStack Router
+
+#### 概要
+TanStack Routerは、TypeScriptファーストのルーティングライブラリです。型安全性とパフォーマンスを重視した設計となっています。
+
+#### 主要な機能
+- **型安全なルーティング**
+  ```typescript
+  /**
+   * ルートパラメータの型定義
+   * @param {string} id - 投稿ID
+   * @returns {string} ルートパス
+   */
+  const postRoute = createRoute({
+    path: '/posts/$id',
+    parseParams: (params) => ({
+      id: Number(params.id),
+    }),
+    stringifyParams: (params) => ({
+      id: String(params.id),
+    }),
+  })
+  ```
+
+- **ルート定義**
+  ```typescript
+  /**
+   * ルートツリーの定義
+   * @property {Route} rootRoute - ルートルート
+   * @property {Route[]} children - 子ルート
+   */
+  const routeTree = rootRoute.addChildren([
+    postsRoute,
+    postRoute,
+    createPostRoute,
+    editPostRoute,
+  ])
+  ```
+
+### TanStack Query
+
+#### 概要
+TanStack Queryは、サーバー状態の管理に特化したライブラリです。データフェッチング、キャッシュ管理、エラーハンドリングを統合的に提供します。
+
+#### 主要な機能
+- **クエリ定義**
+  ```typescript
+  /**
+   * 投稿一覧の取得
+   * @returns {QueryResult<Post[]>} 投稿一覧のクエリ結果
+   */
+  const posts = useQuery({
+    queryKey: ['posts'],
+    queryFn: api.posts.getAll,
+  })
+  ```
+
+- **ミューテーション**
+  ```typescript
+  /**
+   * 投稿の作成
+   * @param {Omit<Post, 'id'>} post - 作成する投稿データ
+   * @returns {MutationResult} ミューテーション結果
+   */
+  const createPost = useMutation({
+    mutationFn: api.posts.create,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['posts'] })
+    },
+  })
+  ```
+
+### shadcn/ui
+
+#### 概要
+shadcn/uiは、Radix UIをベースにした、カスタマイズ可能なUIコンポーネントライブラリです。
+
+#### 主要なコンポーネント
+- **Card**
+  ```typescript
+  /**
+   * カードコンポーネント
+   * @property {ReactNode} children - カードの内容
+   * @property {string} className - カスタムクラス名
+   */
+  <Card className="h-full hover:bg-muted/50">
+    <CardHeader>
+      <CardTitle>{title}</CardTitle>
+    </CardHeader>
+    <CardContent>{content}</CardContent>
+  </Card>
+  ```
+
+- **Button**
+  ```typescript
+  /**
+   * ボタンコンポーネント
+   * @property {string} variant - ボタンのバリアント（'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'）
+   * @property {ReactNode} children - ボタンの内容
+   */
+  <Button variant="ghost">Click me</Button>
+  ```
+
 ## 目次
 1. [実装手順](#実装手順)
 2. [コンポーネント構成](#コンポーネント構成)
