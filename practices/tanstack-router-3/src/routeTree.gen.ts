@@ -11,11 +11,21 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as PostsImport } from './routes/posts'
 import { Route as IndexImport } from './routes/index'
 import { Route as TestAboutImport } from './routes/test.about'
+import { Route as PostsTestsImport } from './routes/posts.tests'
+import { Route as Posts10Import } from './routes/posts.10'
+import { Route as PostsIdImport } from './routes/posts.$id'
 import { Route as DemoTanstackQueryImport } from './routes/demo.tanstack-query'
 
 // Create/Update Routes
+
+const PostsRoute = PostsImport.update({
+  id: '/posts',
+  path: '/posts',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -27,6 +37,24 @@ const TestAboutRoute = TestAboutImport.update({
   id: '/test/about',
   path: '/test/about',
   getParentRoute: () => rootRoute,
+} as any)
+
+const PostsTestsRoute = PostsTestsImport.update({
+  id: '/tests',
+  path: '/tests',
+  getParentRoute: () => PostsRoute,
+} as any)
+
+const Posts10Route = Posts10Import.update({
+  id: '/10',
+  path: '/10',
+  getParentRoute: () => PostsRoute,
+} as any)
+
+const PostsIdRoute = PostsIdImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => PostsRoute,
 } as any)
 
 const DemoTanstackQueryRoute = DemoTanstackQueryImport.update({
@@ -46,12 +74,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/posts': {
+      id: '/posts'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsImport
+      parentRoute: typeof rootRoute
+    }
     '/demo/tanstack-query': {
       id: '/demo/tanstack-query'
       path: '/demo/tanstack-query'
       fullPath: '/demo/tanstack-query'
       preLoaderRoute: typeof DemoTanstackQueryImport
       parentRoute: typeof rootRoute
+    }
+    '/posts/$id': {
+      id: '/posts/$id'
+      path: '/$id'
+      fullPath: '/posts/$id'
+      preLoaderRoute: typeof PostsIdImport
+      parentRoute: typeof PostsImport
+    }
+    '/posts/10': {
+      id: '/posts/10'
+      path: '/10'
+      fullPath: '/posts/10'
+      preLoaderRoute: typeof Posts10Import
+      parentRoute: typeof PostsImport
+    }
+    '/posts/tests': {
+      id: '/posts/tests'
+      path: '/tests'
+      fullPath: '/posts/tests'
+      preLoaderRoute: typeof PostsTestsImport
+      parentRoute: typeof PostsImport
     }
     '/test/about': {
       id: '/test/about'
@@ -65,42 +121,92 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface PostsRouteChildren {
+  PostsIdRoute: typeof PostsIdRoute
+  Posts10Route: typeof Posts10Route
+  PostsTestsRoute: typeof PostsTestsRoute
+}
+
+const PostsRouteChildren: PostsRouteChildren = {
+  PostsIdRoute: PostsIdRoute,
+  Posts10Route: Posts10Route,
+  PostsTestsRoute: PostsTestsRoute,
+}
+
+const PostsRouteWithChildren = PostsRoute._addFileChildren(PostsRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/posts': typeof PostsRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/posts/$id': typeof PostsIdRoute
+  '/posts/10': typeof Posts10Route
+  '/posts/tests': typeof PostsTestsRoute
   '/test/about': typeof TestAboutRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/posts': typeof PostsRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/posts/$id': typeof PostsIdRoute
+  '/posts/10': typeof Posts10Route
+  '/posts/tests': typeof PostsTestsRoute
   '/test/about': typeof TestAboutRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/posts': typeof PostsRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/posts/$id': typeof PostsIdRoute
+  '/posts/10': typeof Posts10Route
+  '/posts/tests': typeof PostsTestsRoute
   '/test/about': typeof TestAboutRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo/tanstack-query' | '/test/about'
+  fullPaths:
+    | '/'
+    | '/posts'
+    | '/demo/tanstack-query'
+    | '/posts/$id'
+    | '/posts/10'
+    | '/posts/tests'
+    | '/test/about'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo/tanstack-query' | '/test/about'
-  id: '__root__' | '/' | '/demo/tanstack-query' | '/test/about'
+  to:
+    | '/'
+    | '/posts'
+    | '/demo/tanstack-query'
+    | '/posts/$id'
+    | '/posts/10'
+    | '/posts/tests'
+    | '/test/about'
+  id:
+    | '__root__'
+    | '/'
+    | '/posts'
+    | '/demo/tanstack-query'
+    | '/posts/$id'
+    | '/posts/10'
+    | '/posts/tests'
+    | '/test/about'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PostsRoute: typeof PostsRouteWithChildren
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   TestAboutRoute: typeof TestAboutRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PostsRoute: PostsRouteWithChildren,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   TestAboutRoute: TestAboutRoute,
 }
@@ -116,6 +222,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/posts",
         "/demo/tanstack-query",
         "/test/about"
       ]
@@ -123,8 +230,28 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.tsx"
     },
+    "/posts": {
+      "filePath": "posts.tsx",
+      "children": [
+        "/posts/$id",
+        "/posts/10",
+        "/posts/tests"
+      ]
+    },
     "/demo/tanstack-query": {
       "filePath": "demo.tanstack-query.tsx"
+    },
+    "/posts/$id": {
+      "filePath": "posts.$id.tsx",
+      "parent": "/posts"
+    },
+    "/posts/10": {
+      "filePath": "posts.10.tsx",
+      "parent": "/posts"
+    },
+    "/posts/tests": {
+      "filePath": "posts.tests.tsx",
+      "parent": "/posts"
     },
     "/test/about": {
       "filePath": "test.about.tsx"
