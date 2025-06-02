@@ -11,11 +11,43 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as PostsImport } from './routes/posts'
+import { Route as LoginformImport } from './routes/loginform'
+import { Route as CreateImport } from './routes/create'
+import { Route as AuthImport } from './routes/_auth'
 import { Route as IndexImport } from './routes/index'
 import { Route as TestAboutImport } from './routes/test.about'
+import { Route as PostsTestsImport } from './routes/posts.tests'
+import { Route as Posts10Import } from './routes/posts.10'
+import { Route as PostsIdImport } from './routes/posts.$id'
 import { Route as DemoTanstackQueryImport } from './routes/demo.tanstack-query'
+import { Route as AuthInvoicesImport } from './routes/_auth.invoices'
+import { Route as AuthDashboardImport } from './routes/_auth.dashboard'
 
 // Create/Update Routes
+
+const PostsRoute = PostsImport.update({
+  id: '/posts',
+  path: '/posts',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LoginformRoute = LoginformImport.update({
+  id: '/loginform',
+  path: '/loginform',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CreateRoute = CreateImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthRoute = AuthImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -29,10 +61,40 @@ const TestAboutRoute = TestAboutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const PostsTestsRoute = PostsTestsImport.update({
+  id: '/tests',
+  path: '/tests',
+  getParentRoute: () => PostsRoute,
+} as any)
+
+const Posts10Route = Posts10Import.update({
+  id: '/10',
+  path: '/10',
+  getParentRoute: () => PostsRoute,
+} as any)
+
+const PostsIdRoute = PostsIdImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => PostsRoute,
+} as any)
+
 const DemoTanstackQueryRoute = DemoTanstackQueryImport.update({
   id: '/demo/tanstack-query',
   path: '/demo/tanstack-query',
   getParentRoute: () => rootRoute,
+} as any)
+
+const AuthInvoicesRoute = AuthInvoicesImport.update({
+  id: '/invoices',
+  path: '/invoices',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthDashboardRoute = AuthDashboardImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -46,12 +108,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
+    '/create': {
+      id: '/create'
+      path: '/create'
+      fullPath: '/create'
+      preLoaderRoute: typeof CreateImport
+      parentRoute: typeof rootRoute
+    }
+    '/loginform': {
+      id: '/loginform'
+      path: '/loginform'
+      fullPath: '/loginform'
+      preLoaderRoute: typeof LoginformImport
+      parentRoute: typeof rootRoute
+    }
+    '/posts': {
+      id: '/posts'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsImport
+      parentRoute: typeof rootRoute
+    }
+    '/_auth/dashboard': {
+      id: '/_auth/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthDashboardImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/invoices': {
+      id: '/_auth/invoices'
+      path: '/invoices'
+      fullPath: '/invoices'
+      preLoaderRoute: typeof AuthInvoicesImport
+      parentRoute: typeof AuthImport
+    }
     '/demo/tanstack-query': {
       id: '/demo/tanstack-query'
       path: '/demo/tanstack-query'
       fullPath: '/demo/tanstack-query'
       preLoaderRoute: typeof DemoTanstackQueryImport
       parentRoute: typeof rootRoute
+    }
+    '/posts/$id': {
+      id: '/posts/$id'
+      path: '/$id'
+      fullPath: '/posts/$id'
+      preLoaderRoute: typeof PostsIdImport
+      parentRoute: typeof PostsImport
+    }
+    '/posts/10': {
+      id: '/posts/10'
+      path: '/10'
+      fullPath: '/posts/10'
+      preLoaderRoute: typeof Posts10Import
+      parentRoute: typeof PostsImport
+    }
+    '/posts/tests': {
+      id: '/posts/tests'
+      path: '/tests'
+      fullPath: '/posts/tests'
+      preLoaderRoute: typeof PostsTestsImport
+      parentRoute: typeof PostsImport
     }
     '/test/about': {
       id: '/test/about'
@@ -65,42 +190,140 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface AuthRouteChildren {
+  AuthDashboardRoute: typeof AuthDashboardRoute
+  AuthInvoicesRoute: typeof AuthInvoicesRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthDashboardRoute: AuthDashboardRoute,
+  AuthInvoicesRoute: AuthInvoicesRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
+interface PostsRouteChildren {
+  PostsIdRoute: typeof PostsIdRoute
+  Posts10Route: typeof Posts10Route
+  PostsTestsRoute: typeof PostsTestsRoute
+}
+
+const PostsRouteChildren: PostsRouteChildren = {
+  PostsIdRoute: PostsIdRoute,
+  Posts10Route: Posts10Route,
+  PostsTestsRoute: PostsTestsRoute,
+}
+
+const PostsRouteWithChildren = PostsRoute._addFileChildren(PostsRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '': typeof AuthRouteWithChildren
+  '/create': typeof CreateRoute
+  '/loginform': typeof LoginformRoute
+  '/posts': typeof PostsRouteWithChildren
+  '/dashboard': typeof AuthDashboardRoute
+  '/invoices': typeof AuthInvoicesRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/posts/$id': typeof PostsIdRoute
+  '/posts/10': typeof Posts10Route
+  '/posts/tests': typeof PostsTestsRoute
   '/test/about': typeof TestAboutRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '': typeof AuthRouteWithChildren
+  '/create': typeof CreateRoute
+  '/loginform': typeof LoginformRoute
+  '/posts': typeof PostsRouteWithChildren
+  '/dashboard': typeof AuthDashboardRoute
+  '/invoices': typeof AuthInvoicesRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/posts/$id': typeof PostsIdRoute
+  '/posts/10': typeof Posts10Route
+  '/posts/tests': typeof PostsTestsRoute
   '/test/about': typeof TestAboutRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/create': typeof CreateRoute
+  '/loginform': typeof LoginformRoute
+  '/posts': typeof PostsRouteWithChildren
+  '/_auth/dashboard': typeof AuthDashboardRoute
+  '/_auth/invoices': typeof AuthInvoicesRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/posts/$id': typeof PostsIdRoute
+  '/posts/10': typeof Posts10Route
+  '/posts/tests': typeof PostsTestsRoute
   '/test/about': typeof TestAboutRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo/tanstack-query' | '/test/about'
+  fullPaths:
+    | '/'
+    | ''
+    | '/create'
+    | '/loginform'
+    | '/posts'
+    | '/dashboard'
+    | '/invoices'
+    | '/demo/tanstack-query'
+    | '/posts/$id'
+    | '/posts/10'
+    | '/posts/tests'
+    | '/test/about'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo/tanstack-query' | '/test/about'
-  id: '__root__' | '/' | '/demo/tanstack-query' | '/test/about'
+  to:
+    | '/'
+    | ''
+    | '/create'
+    | '/loginform'
+    | '/posts'
+    | '/dashboard'
+    | '/invoices'
+    | '/demo/tanstack-query'
+    | '/posts/$id'
+    | '/posts/10'
+    | '/posts/tests'
+    | '/test/about'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/create'
+    | '/loginform'
+    | '/posts'
+    | '/_auth/dashboard'
+    | '/_auth/invoices'
+    | '/demo/tanstack-query'
+    | '/posts/$id'
+    | '/posts/10'
+    | '/posts/tests'
+    | '/test/about'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRouteWithChildren
+  CreateRoute: typeof CreateRoute
+  LoginformRoute: typeof LoginformRoute
+  PostsRoute: typeof PostsRouteWithChildren
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   TestAboutRoute: typeof TestAboutRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRouteWithChildren,
+  CreateRoute: CreateRoute,
+  LoginformRoute: LoginformRoute,
+  PostsRoute: PostsRouteWithChildren,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   TestAboutRoute: TestAboutRoute,
 }
@@ -116,6 +339,10 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/_auth",
+        "/create",
+        "/loginform",
+        "/posts",
         "/demo/tanstack-query",
         "/test/about"
       ]
@@ -123,8 +350,49 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.tsx"
     },
+    "/_auth": {
+      "filePath": "_auth.tsx",
+      "children": [
+        "/_auth/dashboard",
+        "/_auth/invoices"
+      ]
+    },
+    "/create": {
+      "filePath": "create.tsx"
+    },
+    "/loginform": {
+      "filePath": "loginform.tsx"
+    },
+    "/posts": {
+      "filePath": "posts.tsx",
+      "children": [
+        "/posts/$id",
+        "/posts/10",
+        "/posts/tests"
+      ]
+    },
+    "/_auth/dashboard": {
+      "filePath": "_auth.dashboard.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/invoices": {
+      "filePath": "_auth.invoices.tsx",
+      "parent": "/_auth"
+    },
     "/demo/tanstack-query": {
       "filePath": "demo.tanstack-query.tsx"
+    },
+    "/posts/$id": {
+      "filePath": "posts.$id.tsx",
+      "parent": "/posts"
+    },
+    "/posts/10": {
+      "filePath": "posts.10.tsx",
+      "parent": "/posts"
+    },
+    "/posts/tests": {
+      "filePath": "posts.tests.tsx",
+      "parent": "/posts"
     },
     "/test/about": {
       "filePath": "test.about.tsx"
